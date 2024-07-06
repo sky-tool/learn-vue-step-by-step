@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 7</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  // {{}} 插值表达式
+  // v-html，v-bind(:)，v-on(@), 动态参数，修饰符
+  // @click.prevent 阻止浏览器默认点击事件，使用我们的自定义事件
+  // 阻止了 form 默认事件跳转 https://www.baidu.com
+  // 采用我们的自定义事件 handleClick
+  const app = Vue.createApp({
+    data() {
+      return {
+        message: "hello world",
+        show: false,
+      }
+    },
+    methods: {
+      handleClick() {
+        alert('click')
+      }
+    },
+    template: `
+      <form action="https://www.baidu.com" @click.prevent="handleClick">
+        <button type="submit">提交</button>
+      </form>
+    `
+  });
+  const vm = app.mount('#root');
+</script>
+</html>
