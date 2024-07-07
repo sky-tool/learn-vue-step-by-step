@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 17</title>
+  <script src="../vue/vue@3.2.23.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  // Non-prop 属性
+  // 用来做样式修饰, 给子组件标签添加一个属性
+
+  // <counter msg="hello" msg1="hello1" />
+  // counter
+  // <div :msg="$attrs.msg">Counter</div>
+  // <div v-bind="$attrs">Counter</div>
+  // <div :msg1="$attrs.msg1">Counter</div>
+
+  // 结果是 
+  // <div msg="hello">Counter</div>
+  // <div msg="hello" msg1="hello1">Counter</div>
+  // <div msg1="hello1">Counter</div>
+  
+  const app = Vue.createApp({
+    template: `
+      <div>
+        <counter msg="hello" msg1="hello1" />
+      </div>
+    `
+  });
+
+  app.component('counter', {
+    // inheritAttrs: false,
+    mounted() {
+      console.log(this.$attrs.msg);
+    },
+    template: `
+      <div :msg="$attrs.msg">Counter</div>
+      <div v-bind="$attrs">Counter</div>
+      <div :msg1="$attrs.msg1">Counter</div>
+    `
+  });
+
+  const vm = app.mount('#root');
+</script>
+</html>

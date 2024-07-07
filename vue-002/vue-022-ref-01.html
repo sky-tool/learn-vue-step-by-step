@@ -3,31 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>lesson 10</title>
+  <title>lesson 22</title>
   <script src="../vue/vue@3.2.23.js"></script>
 </head>
 <body>
   <div id="root"></div>
 </body>
 <script>
+  // ref 实际上是获取 dom 节点的一个语法
   const app = Vue.createApp({
     data() {
-      return {
-        show: false,
-        conditionOne: false,
-        conditionTwo: true
-      }
+      return { count: 1}
+    },
+
+    mounted() {
+      console.log(this.$refs.count)
+      // this.$refs.count.innerHTML = 'hello'
     },
     template: `
-      <div v-if="show">Hello World</div>
-
-      <div v-if="conditionOne">if</div>
-      <div v-else-if="conditionTwo">elseif</div>
-      <div v-else>else</div>
-
-      <div v-show="show">Bye World</div>
+      <div>
+        <div ref="count">
+          {{count}}
+        </div>
+      </div>
     `
   });
+
 
   const vm = app.mount('#root');
 </script>

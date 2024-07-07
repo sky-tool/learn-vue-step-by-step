@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 22</title>
+  <script src="../vue/vue@3.2.23.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  // ref 实际上是获取 dom 节点/ 组件引用 的一个语法
+  const app = Vue.createApp({
+    data() {
+      return { count: 1}
+    },
+
+    mounted() {
+      // 通过 this.$refs.common 获取到子组件 common-item
+      // 并且调用 子组件的方法 sayHello()
+      // 不推荐按这种方式调用 子组件方法，可维护性不高
+      
+      console.log(this.$refs.common.sayHello())
+      // this.$refs.count.innerHTML = 'hello'
+    },
+    template: `
+      <div>
+        <common-item ref="common"/>
+      </div>
+    `
+  });
+
+  app.component('common-item', {
+    methods: {
+      sayHello() {
+        alert('hello');
+      }
+    },
+    template: `<div>hello world</div>`
+  })
+
+  const vm = app.mount('#root');
+</script>
+</html>

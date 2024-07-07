@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 18</title>
+  <script src="../vue/vue@3.2.23.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  // 双向绑定，子组件更改父组件数据
+  // v-model 双向绑定
+  // count 父组件数据
+  // v-model.uppercase 自定义修饰符，将字符串大写
+  // modelModifiers 获取修饰符 uppercase
+  //                default:()=>({}) 当不传修饰符时 默认是空对象
+  // v-model.uppercase="count" 双向绑定 count 的值
+  // $emit 向父组件发送事件
+  // update:modelValue 系统api，会修改 modelValue 的值，新值是 this.modelValue + 3
+  const app = Vue.createApp({
+    data() {
+      return { 
+        count: 'a',
+      }
+    },
+    template: `
+      <counter v-model.uppercase="count"/>
+    `
+  });
+
+  app.component('counter', {
+    props: {
+      'modelValue':String,
+      'modelModifiers': {
+        default:()=>({})
+      }
+    },
+    mounted() {
+      console.log(this.modelModifiers)
+    },
+
+    methods: {
+      handleClick() {
+        let newVaule = this.modelValue + 'b'
+        if(this.modelModifiers.uppercase) {
+          newVaule = newVaule.toUpperCase();
+        }
+        this.$emit('update:modelValue', newVaule);
+      },
+    },
+    template: `
+      <div @click="handleClick">{{modelValue}}</div>
+    `
+  });
+
+  const vm = app.mount('#root');
+</script>
+</html>

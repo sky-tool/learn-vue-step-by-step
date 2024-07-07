@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 21</title>
+  <script src="../vue/vue@3.2.23.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  // 异步组件: 是异步执行某些组件的逻辑，这叫做异步组件
+  // 优势：
+  //   性能提升：通过仅在需要时加载组件，可以显著减少首次加载时间。
+  //   代码分割：允许更细粒度地控制代码和资源的加载，提高应用的可维护性和可扩展性。
+  //   更好的资源管理：异步加载可帮助管理加载过程中的内存使用，特别是在大型应用中。
+  const app = Vue.createApp({
+    template: `
+      <div>
+        <common-item />
+        <async-common-item />
+      </div>
+    `
+  });
+
+  app.component('common-item', {
+    template: `<div>hello world</div>`
+  });
+
+  app.component('async-common-item', Vue.defineAsyncComponent(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          template: `<div>this is an async component</div>`
+        })
+      }, 4000)
+    })
+  }))
+
+  const vm = app.mount('#root');
+</script>
+</html>

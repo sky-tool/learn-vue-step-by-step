@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>lesson 20</title>
+    <script src="../vue/vue@3.2.23.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script>
+// Vue 中的 slot (插槽) 是一个非常有用的特性,用于实现组件的内容分发。以下是一些关于 Vue slot 的关键信息:
+// 1. 基本用法:
+// 在父组件中使用子组件时,可以在子组件标签内添加内容,这些内容会被传递到子组件的 <slot> 标签位置。
+// 2. 具名插槽:
+// 可以给 slot 命名,实现更精确的内容分发。
+// 3. 作用域插槽:
+// 允许子组件向父组件传递数据,使得插槽内容可以访问子组件的数据。
+// 4. 默认内容:
+// 可以为插槽设置默认内容,当没有传入内容时显示。
+// 5. 动态插槽名:
+// Vue 2.6+ 支持动态指定插槽名。
+
+    const app = Vue.createApp({
+      data() {
+        return {
+          parentMessage: "Message from parent",
+          items: ["Apple", "Banana", "Cherry"],
+        };
+      },
+      template: `
+    <div>
+    <h1>slot demo</h1>
+    <h2>Parent Component</h2>
+    <p>parentMessage: {{ parentMessage }}</p>
+    
+    <ChildComponent :items="items">
+      <!-- slotProps 子控件传值给 父控件 -->
+      <template v-slot:default="slotProps">
+        <p>Default slot content: {{ slotProps.item }}</p>
+      </template>
+      <!-- slotProps 子控件传值给 父控件 -->
+      <template v-slot:header="headerProps">
+        <h3>{{ headerProps.title }}</h3>
+      </template>
+      
+      <template v-slot:footer>
+        <p>Footer content (from parent)</p>
+      </template>
+    </ChildComponent>
+  </div>
+    `,
+    });
+
+    app.component("ChildComponent", {
+      props: ["items"],
+      data() {
+        return {
+          headerTitle: "Item List",
+          childMessage: "Message from child",
+        };
+      },
+      template: `
+    <div>
+    <!-- 具名插槽，作用域插槽 -->
+    <slot name="header" :title="headerTitle"></slot>
+    
+    <ul>
+      <li v-for="item in items" :key="item">
+        <!-- 作用域插槽 -->
+        <slot :item="item">
+          {{ item }} <!-- 默认内容 -->
+        </slot>
+      </li>
+    </ul>
+    <!-- 具名插槽 -->
+    <slot name="footer"></slot>
+    
+    <p>childMessage: {{ childMessage }}</p>
+  </div>
+    `,
+    });
+
+    const vm = app.mount("#root");
+  </script>
+</html>

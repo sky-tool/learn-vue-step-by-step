@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 22</title>
+  <script src="../vue/vue@3.2.23.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  // provide / inject 跨组件传值
+  // provide: 祖先组件  提供数据
+  // inject： 子孙组件  注入数据
+  // 特性: 非响应式数据，数据变化不会触发页面渲染
+  const app = Vue.createApp({
+    data() {
+      return { count: 1}
+    },
+    provide() {
+      return {
+        count: this.count,
+      }
+    },
+    template: `
+      <div>
+        <child :count="count" />
+        <button @click="count += 1">Add</button>
+      </div>
+    `
+  });
+
+  app.component('child', {
+    template: `<child-child />`
+  });
+
+  app.component('child-child', {
+    inject: ['count'],
+    template: `<div>{{count}}</div>`
+  });
+
+  const vm = app.mount('#root');
+</script>
+</html>

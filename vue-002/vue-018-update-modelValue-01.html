@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 18</title>
+  <script src="../vue/vue@3.2.23.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  // 双向绑定，子组件更改父组件数据
+  // v-model 双向绑定
+  // count 父组件数据
+  // modelValue： 属性值，这里必须使用 modelValue 名字，除非 自定义变量: v-model:customName="count"
+  // $emit 向父组件发送事件
+  // update:modelValue 系统api，会修改 modelValue 的值，新值是 this.modelValue + 3
+  const app = Vue.createApp({
+    data() {
+      return { count: 1 }
+    },
+    template: `
+      <counter v-model="count" />
+    `
+  });
+
+  app.component('counter', {
+    props: ['modelValue'],
+    methods: {
+      handleClick() {
+        this.$emit('update:modelValue', this.modelValue + 3);
+      }
+    },
+    template: `
+      <div @click="handleClick">{{modelValue}}</div>
+    `
+  });
+
+  const vm = app.mount('#root');
+</script>
+</html>

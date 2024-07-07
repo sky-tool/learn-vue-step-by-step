@@ -3,31 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>lesson 10</title>
+  <title>lesson 22</title>
   <script src="../vue/vue@3.2.23.js"></script>
 </head>
 <body>
   <div id="root"></div>
 </body>
 <script>
+  // v-once 让某个元素标签只渲染一次, 后续数据变化不会再触发元素渲染
+  // count 的值变化不会引起 元素渲染
+
   const app = Vue.createApp({
     data() {
-      return {
-        show: false,
-        conditionOne: false,
-        conditionTwo: true
-      }
+      return { count: 1}
     },
+
     template: `
-      <div v-if="show">Hello World</div>
-
-      <div v-if="conditionOne">if</div>
-      <div v-else-if="conditionTwo">elseif</div>
-      <div v-else>else</div>
-
-      <div v-show="show">Bye World</div>
+      <div @click="count += 1" v-once>
+          {{count}}
+        </div>
     `
   });
+
 
   const vm = app.mount('#root');
 </script>
