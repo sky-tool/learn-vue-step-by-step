@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 28</title>
+  <script src="../vue/vue@3.2.23.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  // mixin 混入: 用于逻辑的拆分和复用
+  // 通过     mixins: [myMixin] 注入到 组件中
+  // 组件 data, methods 优先级高于 mixin data, methods 优先级
+  // 生命周期函数，先执行 mixin 里面的，再执行组件里面的
+  // 自定义的属性，组件种的属性优先级高于 mixin 属性的优先级
+  // 调整自定义属性的优先级: app.config.optionMergeStrategies.number 
+  //        这里将 mixin 的优先级 调整高于组件
+  const myMixin = {
+    data: ()=>{
+      return {
+        value: 2,
+        count: 100
+      }
+    },
+    created() {
+      console.log('mixin created')
+    },
+
+    methods: {
+      handleClick() {
+        console.log('mixin handleClick')
+      }
+    },
+
+    number: 1,
+    name: 'mixin-name'
+  }
+
+  const app = Vue.createApp({
+    data: ()=> {
+        return {value: 1}
+    },
+    created() {
+      console.log('created')
+    },
+
+    methods: {
+      handleClick() {
+        console.log('handleClick')
+      }
+    },
+    mixins: [myMixin],
+    number: 2,
+    name: 'name',
+    template: `
+      <div>
+        <div>组件中可以直接使用 mixin 里的数据如: count = {{count}}</div>
+        <div>data 优先级: 组件 > mixin, 会替换，这里采用组件的数据 {{value}}</div>
+        <div>mixin 生命周期函数也会触发，详见 console 打印</div>
+        <div>生命周期函数优先级 先 执行 mixin, 再执行组件 , 详见 console 打印 </div>
+        <div>methods 优先级，组件 > mixin , 会替换, 详见 console 打印</div>
+        <button @click="handleClick">点击</button>
+        <div>自定义属性优先级 组件 > mixin, number = {{this.$options.number}}</div>
+        <div>自定义属性优先级可调整 app.config.optionMergeStrategies.name , 让 组件 < mixin , name = {{this.$options.name}}</div>
+
+      </div>
+    `
+  });
+
+  app.config.optionMergeStrategies.name = (mixinVal, appValue) => {
+    return mixinVal || appValue;
+  }
+
+  const vm = app.mount('#root');
+</script>
+</html>
