@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 29</title>
+  <style>
+    .header { position: absolute}
+  </style>
+  <script src="../vue/vue@3.2.23.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  // 自定义指令 directive
+  //   app.directive("focus", 定义指令，在 组件 mounted 生命周期 自动 focus
+  //   <input v-focus/>  使用 focus 指令
+
+  const app = Vue.createApp({
+    data() {
+        return {}
+    },
+    mounted() {
+    },
+
+    template: `
+    <div>
+      <input v-focus/>  
+    </div>
+    
+    `
+  });
+
+  app.directive("focus",{
+    beforeMount(el) {
+      console.log(beforeMount)
+    },
+
+    mounted(el) {
+      el.focus()
+    },
+
+    beforeUpdate(el) {
+      console.log(beforeUpdate)
+    },
+
+    updated(el) {
+      console.log(updated)
+    },
+
+    unmounted(el) {
+      console.log(unmounted)
+    },
+
+  })
+
+  const vm = app.mount('#root');
+</script>
+</html>

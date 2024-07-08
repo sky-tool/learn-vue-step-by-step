@@ -26,7 +26,7 @@
       font-size: 100px;
     }
   </style>
-  <script src="https://unpkg.com/vue@next"></script>
+  <script src="../vue/vue@3.2.23.js"></script>
 </head>
 <body>
   <div id="root"></div>
@@ -34,6 +34,11 @@
 </body>
 <script>
   // teleport 传送门
+  // 将 组件 挂载在 指定 dom 上
+  // teleport to="#hello" , 将组件挂载在 id="hello" 的dom上
+  // 优点 不用频繁操作dom，
+  // 应用场景，页面蒙层，全局弹窗等
+  
   const app = Vue.createApp({
     data() {
       return {

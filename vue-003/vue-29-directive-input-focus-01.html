@@ -13,26 +13,25 @@
   <div id="root"></div>
 </body>
 <script>
-  // 自定义指令 directive
+  // input 自动 focus
+  // 使用 refs 实现
 
   const app = Vue.createApp({
     data() {
-      return {
-        distance: 110
-      }
+        return {}
     },
+    mounted() {
+      this.$refs.input.focus();
+    },
+
     template: `
-      <div>
-        <div v-pos:right="distance" class="header">
-          <input />
-        </div>
-      </div>
+    <div>
+      <input ref="input"/>  
+    </div>
+    
     `
   });
 
-  app.directive('pos', (el, binding) => {
-    el.style[binding.arg] = (binding.value + 'px');
-  })
 
   const vm = app.mount('#root');
 </script>

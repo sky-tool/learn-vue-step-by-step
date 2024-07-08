@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 29</title>
+  <style>
+    .header { position: absolute}
+  </style>
+  <script src="../vue/vue@3.2.23.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  // 自定义指令 directive arg 参数
+  // v-pos:left="distance"
+  // pos 指令名称
+  // left = binding.arg 参数名称
+  // distance = binding.value 指令的值
+
+  const app = Vue.createApp({
+    data() {
+      return {
+        distance: 110
+      }
+    },
+    template: `
+      <div>
+        <div v-pos:left="distance" class="header">
+          <input v-model="distance"/>
+        </div>
+      </div>
+    `
+  });
+
+  app.directive('pos', (el, binding) => {
+    el.style[binding.arg] = (binding.value + 'px');
+  })
+
+  const vm = app.mount('#root');
+</script>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 29</title>
+  <style>
+    .header { position: absolute}
+  </style>
+  <script src="../vue/vue@3.2.23.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+ // 自定义指令 directive arg 参数
+  // v-pos="top"
+  // pos 指令名称
+  // distance = binding.value 指令的值
+
+  const app = Vue.createApp({
+    data() {
+      return {
+        top: 110
+      }
+    },
+    template: `
+      <div>
+        <div v-pos="top" class="header">
+          <input v-model="top"/>
+        </div>
+      </div>
+    `
+  });
+
+  // 指令1 效果等于 指令2
+  app.directive('pos', (el, binding) => {
+    el.style.top = (binding.value + 'px')
+  })
+
+  // 指令2 
+  // app.directive('pos', {
+  //   mounted(el, binding) {
+  //     el.style.top = (binding.value + 'px')
+  //   },
+
+  //   updated(el, binding) {
+  //     el.style.top = (binding.value + 'px')
+  //   },
+
+  // })
+
+  const vm = app.mount('#root');
+</script>
+</html>
