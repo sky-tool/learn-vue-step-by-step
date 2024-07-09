@@ -4,13 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>lesson 34</title>
-  <script src="https://unpkg.com/vue@next"></script>
+  <script src="../vue/vue@3.2.23.js"></script>
 </head>
 <body>
   <div id="root"></div>
 </body>
 <script>
   // 对数据做校验的插件
+  // setup 在 created vue实例被完全初始化之前调用
+  // setup 中不要使用 this ，此时 this 中的属性还没有初始化
   const app = Vue.createApp({
     template: `
       <div @click="handleClick">{{name}}</div>

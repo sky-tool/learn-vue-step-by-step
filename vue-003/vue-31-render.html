@@ -12,6 +12,7 @@
 <script>
   // render function
   // template -> render -> h -> 虚拟DOM（JS对象）-> 真实 DOM -> 展示到页面上
+  // h(tagName, attributes, text)
   const app = Vue.createApp({
     template: `
       <my-title :level="2">
