@@ -38,13 +38,13 @@
   // teleport to="#hello" , 将组件挂载在 id="hello" 的dom上
   // 优点 不用频繁操作dom，
   // 应用场景，页面蒙层，全局弹窗等
-  
+
   const app = Vue.createApp({
     data() {
       return {
         show: false,
         message: 'hello'
-      }
+      },
     },
     methods: {
       handleBtnClick() {
